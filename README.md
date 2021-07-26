@@ -7,7 +7,8 @@ https://yeuchi.github.io/TriangleGradient/index.html
 # About
 
 Used to worked with 2-4D graphics at Jostens with Adobe Flash / Flex and C#.\
-Since Flash is no more, this is an exercise in javascript to render a simple triangle -- if GPU (OpenGL) is not available.
+Since Flash is no more, this is an exercise in javascript to render a simple triangle -- if GPU (OpenGL) is not available. \
+Amazing - the same technique applies for color management - mapping.
 
 # References
 
