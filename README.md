@@ -6,7 +6,7 @@ https://yeuchi.github.io/TriangleGradient/javascript/index.html
 
 ### Android Kotlin (work in progress)
 - xml layout, canvas, bitmap implementation
-<img width="210" src="https://github.com/yeuchi/TriangleGradient/assets/1282659/f7201862-b3e7-46d9-b953-5ede84c6d4f0">
+- <img width="210" src="https://github.com/yeuchi/TriangleGradient/assets/1282659/bacc50d8-77a6-4f30-bb90-296dcec40cb7">
 
 ### Android Studio
 Iguana 2023.2.1 Patch 2 April 3, 2024\
