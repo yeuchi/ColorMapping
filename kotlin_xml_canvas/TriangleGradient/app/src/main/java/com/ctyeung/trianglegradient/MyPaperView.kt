@@ -21,6 +21,7 @@ import android.graphics.Rect
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import androidx.core.graphics.alpha
 import androidx.core.graphics.green
 import androidx.core.graphics.red
 
@@ -31,7 +32,7 @@ class MyPaperView(
 ) :
     View(context, attrs) {
     val dotColor = Color.BLUE
-    val lineColor = Color.GREEN
+    val lineColor = Color.argb(255, 0, 255, 0)
 
     // defines paint and canvas
     var drawPaint: Paint? = null
@@ -130,13 +131,13 @@ class MyPaperView(
                 for (x in 0 until width) {
                     /* if pixel in triangle */
                     val pixel = it.getPixel(x,y)
-                    if(pixel.red == 0) {
-                        val r = requant(mtx[0] * x + mtx[1] * y + mtx[2])
+//                    if(pixel.green == 255) {
+                        val b = requant(mtx[0] * x + mtx[1] * y + mtx[2])
                         val g = requant(mtx[3] * x + mtx[4] * y + mtx[5])
-                        val b = requant(mtx[6] * x + mtx[7] * y + mtx[8])
+                        val r = requant(mtx[6] * x + mtx[7] * y + mtx[8])
                         val color: Int = Color.argb(255, r, g, b)
                         it.setPixel(x, y, color)
-                    }
+//                    }
                 }
             }
 
@@ -145,7 +146,7 @@ class MyPaperView(
         }
     }
 
-    private fun requant(num: Float): Int {
+    private fun requant(num: Double): Int {
         return when {
             num < 0 -> 0
             num > 255 -> 255
@@ -162,26 +163,26 @@ class MyPaperView(
         color1: Int,
         color2: Int,
         color3: Int,
-    ): ArrayList<Float> {
+    ): ArrayList<Double> {
         /*
          * TODO Use 4x4 matrix
          *  https://developer.android.com/reference/android/opengl/Matrix
          */
-        val dMtx = arrayListOf<Float>(
-            points[0].x, points[0].y, 1F,
-            points[1].x, points[1].y, 1F,
-            points[2].x, points[2].y, 1F
+        val dMtx = arrayListOf<Double>(
+            points[0].x.toDouble(), points[0].y.toDouble(), 1.0,
+            points[1].x.toDouble(), points[1].y.toDouble(), 1.0,
+            points[2].x.toDouble(), points[2].y.toDouble(), 1.0
         )
 
         // inverse matrix
         val det = dMtx[0] * (dMtx[4] * dMtx[8] - dMtx[5] * dMtx[7])
         -dMtx[1] * (dMtx[3] * dMtx[8] - dMtx[5] * dMtx[6])
-        +dMtx[2] * (dMtx[3] * dMtx[7] - dMtx[4] * dMtx[6]);
+        +dMtx[2] * (dMtx[3] * dMtx[7] - dMtx[4] * dMtx[6])
 
-        var iMtx = arrayListOf<Float>(
-            0f, 0f, 0f,
-            0f, 0f, 0f,
-            0f, 0f, 0f
+        var iMtx = arrayListOf<Double>(
+            0.0, 0.0, 0.0,
+            0.0, 0.0, 0.0,
+            0.0, 0.0, 0.0
         )
         iMtx[0] = (dMtx[4] * dMtx[8] - dMtx[5] * dMtx[7]) / det;
         iMtx[3] = (dMtx[6] * dMtx[5] - dMtx[3] * dMtx[8]) / det;
@@ -207,10 +208,10 @@ class MyPaperView(
         val blu3 = Color.blue(color3)
 
         // find matrix
-        val mtx = arrayListOf<Float>(
-            0f, 0f, 0f,
-            0f, 0f, 0f,
-            0f, 0f, 0f
+        val mtx = arrayListOf<Double>(
+            0.0, 0.0, 0.0,
+            0.0, 0.0, 0.0,
+            0.0, 0.0, 0.0
         )
         mtx[0] = red1 * iMtx[0] + grn1 * iMtx[1] + blu1 * iMtx[2]
         mtx[1] = red1 * iMtx[3] + grn1 * iMtx[4] + blu1 * iMtx[5]
