@@ -100,10 +100,7 @@ class MyPaperView(
                 }
                 path.close()
                 canvas.drawPath(path, drawPaint!!)
-                bmp?.let {
-                    val rect = Rect(0, 0, it.width, it.height)
-                    canvas.drawBitmap(it, null, rect, null)
-                }
+
                 fillGradientColors(canvas)
             }
 
@@ -132,6 +129,9 @@ class MyPaperView(
             val rect = Rect(0, 0, width, height)
             for (y in 0 until height) {
                 for (x in 0 until width) {
+                    /*
+                     * TODO use line formula to determine pixels inside triangle
+                     */
                     /* if pixel in triangle */
                     val pixel = it.getPixel(x,y)
 //                    pixel.apply {
