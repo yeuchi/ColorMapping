@@ -11,12 +11,22 @@ import com.ctyeung.trianglegradient.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     private lateinit var mBinding: ActivityMainBinding
-    private lateinit var mPaper: MyPaperView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        mPaper = this.findViewById(R.id.paper)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mBinding.apply {
+            btnDeleteLine.setOnClickListener {
+                paper.apply {
+                    points.clear()
+                    invalidate()
+                }
+            }
+        }
     }
 }

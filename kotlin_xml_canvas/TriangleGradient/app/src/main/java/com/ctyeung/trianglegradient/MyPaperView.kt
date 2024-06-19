@@ -49,7 +49,10 @@ class MyPaperView(
     }
 
     override fun onDraw(canvas: Canvas) {
-        // points = arrayListOf<PointF>(PointF(42f, 269f), PointF(134f, 131f), PointF(289f, 262f))
+        /*
+         * For debugging matrix calculation
+         * spoints = arrayListOf<PointF>(PointF(42f, 269f), PointF(134f, 131f), PointF(289f, 262f))
+         */
 
         bmp?.let {
             drawKnots(canvas)
@@ -190,7 +193,10 @@ class MyPaperView(
         val det =
             dMtx[0] * (dMtx[4] * dMtx[8] - dMtx[5] * dMtx[7]) - dMtx[1] * (dMtx[3] * dMtx[8] - dMtx[5] * dMtx[6]) + dMtx[2] * (dMtx[3] * dMtx[7] - dMtx[4] * dMtx[6])
 
-        // det = 33442
+        /*
+         * For debugging matrix calculations
+         * det = 33442
+         */
         var iMtx = arrayListOf<Double>(
             0.0, 0.0, 0.0,
             0.0, 0.0, 0.0,
@@ -206,6 +212,9 @@ class MyPaperView(
         iMtx[5] = (dMtx[2] * dMtx[3] - dMtx[0] * dMtx[5]) / det;
         iMtx[8] = (dMtx[0] * dMtx[4] - dMtx[1] * dMtx[3]) / det;
 
+        /*
+         * For debugging matrix calculations
+         */
 //        (-0.003917229830751749, -0.0002093176245439866, 0.0041265474552957355,
 //        0.004634890257759703, -0.007385921894623527, 0.002751031636863824,
 //        -0.08226182644578674, 1.9956043298845763, -0.9133425034387895)
@@ -241,6 +250,9 @@ class MyPaperView(
         mtx[7] = red3 * iMtx[3] + grn3 * iMtx[4] + blu3 * iMtx[5]
         mtx[8] = red3 * iMtx[6] + grn3 * iMtx[7] + blu3 * iMtx[8]
         return mtx
+        /*
+         * For debugging matrix calculations
+         */
 //       -0.053375994258716586, -1.8834100831289995, 508.8791041205669,
 //        -0.998893606841696, 1.1818970157287243, -20.976765743675617,
 //        1.0522696011004125, 0.7015130674002751, -232.90233837689132
@@ -265,6 +277,9 @@ class MyPaperView(
 
             MotionEvent.ACTION_UP -> {
                 points.add(point)
+                if(points.size>3) {
+                    points.removeAt(0)
+                }
                 invalidate()
             }
 
