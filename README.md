@@ -4,8 +4,9 @@ https://yeuchi.github.io/TriangleGradient/javascript/index.html
 
 <img width="900" src="https://user-images.githubusercontent.com/1282659/126918850-f6125710-269f-46f9-bde3-3e5baee880b2.png">
 
-### Android Kotlin (work in progress)
+### Android Kotlin
 - xml layout, canvas, bitmap implementation
+  
 <img width="210" src="https://github.com/yeuchi/TriangleGradient/assets/1282659/0e225a79-9f78-429d-b01d-e33406d303f7"> <img width="210" src="https://github.com/yeuchi/TriangleGradient/assets/1282659/7e2f2e91-f018-4064-9596-0c34ed24dc47">
 
 ### Android Studio
