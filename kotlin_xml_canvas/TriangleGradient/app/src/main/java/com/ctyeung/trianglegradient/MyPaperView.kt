@@ -40,7 +40,7 @@ class MyPaperView(
     var path: Path? = null
     var points = arrayListOf<PointF>()
     var bmp: Bitmap? = null
-
+    var myCanvas: Canvas? = null
 
     init {
         isFocusable = true
@@ -49,7 +49,7 @@ class MyPaperView(
     }
 
     override fun onDraw(canvas: Canvas) {
-       // points = arrayListOf<PointF>(PointF(42f, 269f), PointF(134f, 131f), PointF(289f, 262f))
+        // points = arrayListOf<PointF>(PointF(42f, 269f), PointF(134f, 131f), PointF(289f, 262f))
 
         bmp?.let {
             drawKnots(canvas)
@@ -58,6 +58,9 @@ class MyPaperView(
             val height = canvas.height
             val width = canvas.width
             bmp = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+            bmp?.let {
+                myCanvas = Canvas(it)
+            }
         }
     }
 
@@ -101,6 +104,9 @@ class MyPaperView(
                 path.close()
                 canvas.drawPath(path, drawPaint!!)
 
+                /* draw on bitmap */
+                myCanvas?.drawPath(path, drawPaint!!)
+
                 fillGradientColors(canvas)
             }
 
@@ -133,16 +139,16 @@ class MyPaperView(
                      * TODO use line formula to determine pixels inside triangle
                      */
                     /* if pixel in triangle */
-                    val pixel = it.getPixel(x,y)
-//                    pixel.apply {
-//                        if(green == 0 && red == 0 && blue == 0 && alpha == 255) {
+                    val pixel = it.getPixel(x, y)
+                    pixel.apply {
+                        if (green == 0 && red == 0 && blue == 0 && alpha == 255) {
                             val b = requant(mtx[0] * x + mtx[1] * y + mtx[2])
                             val g = requant(mtx[3] * x + mtx[4] * y + mtx[5])
                             val r = requant(mtx[6] * x + mtx[7] * y + mtx[8])
                             val color: Int = Color.argb(255, r, g, b)
                             it.setPixel(x, y, color)
-//                        }
-//                    }
+                        }
+                    }
                 }
             }
 
@@ -181,7 +187,8 @@ class MyPaperView(
         )
 
         // inverse matrix
-        val det = dMtx[0] * (dMtx[4] * dMtx[8] - dMtx[5] * dMtx[7]) - dMtx[1] * (dMtx[3] * dMtx[8] - dMtx[5] * dMtx[6]) + dMtx[2] * (dMtx[3] * dMtx[7] - dMtx[4] * dMtx[6])
+        val det =
+            dMtx[0] * (dMtx[4] * dMtx[8] - dMtx[5] * dMtx[7]) - dMtx[1] * (dMtx[3] * dMtx[8] - dMtx[5] * dMtx[6]) + dMtx[2] * (dMtx[3] * dMtx[7] - dMtx[4] * dMtx[6])
 
         // det = 33442
         var iMtx = arrayListOf<Double>(
