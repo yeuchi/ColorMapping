@@ -22,10 +22,7 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         mBinding.apply {
             btnDeleteLine.setOnClickListener {
-                paper.apply {
-                    points.clear()
-                    invalidate()
-                }
+                paper.clear()
             }
         }
     }
