@@ -164,18 +164,21 @@ class MyPaperView(
                     pixel.apply {
                         /* if pixel in triangle */
                         if (green == 0 && red == 0 && blue == 0 && alpha == 255) {
-                            val b = requantize(mtx[0] * x + mtx[1] * y + mtx[2])
-                            val g = requantize(mtx[3] * x + mtx[4] * y + mtx[5])
-                            val r = requantize(mtx[6] * x + mtx[7] * y + mtx[8])
-                            val color: Int = Color.argb(255, r, g, b)
-                            it.setPixel(x, y, color)
+                            val b = (mtx[0] * x + mtx[1] * y + mtx[2])
+                            val g = (mtx[3] * x + mtx[4] * y + mtx[5])
+                            val r = (mtx[6] * x + mtx[7] * y + mtx[8])
+                            /* extra cautious -- probably don't need it */
+                            if (r <= 255 && g <= 255 && b <= 255 && r >= 0 && g >= 0 && b >= 0) {
+                                val color: Int = Color.argb(255, r.toInt(), g.toInt(), b.toInt())
+                                it.setPixel(x, y, color)
+                            }
                         }
                     }
                 }
             }
 
             /* draw bitmap into canvas */
-            canvas.drawBitmap(it, null, Rect(0,0,it.width, it.height), null)
+            canvas.drawBitmap(it, null, Rect(0, 0, it.width, it.height), null)
         }
     }
 
@@ -183,21 +186,21 @@ class MyPaperView(
      * Find Rect that bounds over triangle (3) points
      * - so we don't iterate over other pixels
      */
-    private fun findRectBoundTriangle():Rect {
+    private fun findRectBoundTriangle(): Rect {
         val upLeft = PointF(10000F, 10000F)
         val btmRight = PointF(0F, 0F)
 
-        points.forEach{
-            if(it.x < upLeft.x) {
+        points.forEach {
+            if (it.x < upLeft.x) {
                 upLeft.x = it.x
             }
-            if(it.y < upLeft.y) {
+            if (it.y < upLeft.y) {
                 upLeft.y = it.y
             }
-            if(it.x > btmRight.x) {
+            if (it.x > btmRight.x) {
                 btmRight.x = it.x
             }
-            if(it.y > btmRight.y) {
+            if (it.y > btmRight.y) {
                 btmRight.y = it.y
             }
         }
@@ -242,7 +245,7 @@ class MyPaperView(
 
             MotionEvent.ACTION_UP -> {
                 points.add(point)
-                if(points.size>3) {
+                if (points.size > 3) {
                     points.removeAt(0)
                 }
                 invalidate()
