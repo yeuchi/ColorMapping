@@ -1,4 +1,9 @@
 # TriangleGradient
+These are exercises (javascript/kotlin) of the follow:
+- linear algebra, 3x3 matrix, determinant, inverse matrix
+- javascript
+- kotlin
+  
 Basic triangle gradient rendering in 3D graphics by using 3x3 matrix transform. \
 https://yeuchi.github.io/TriangleGradient/javascript/index.html
 
